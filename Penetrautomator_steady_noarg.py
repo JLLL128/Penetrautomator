@@ -8,7 +8,7 @@ from requests.exceptions import MissingSchema
 from urllib.parse import urlparse
 import datetime
 import os
-import threading
+import argparse  # 引入argparse库
 
 TARGET_URL = None
 TIMESTAMP = datetime.datetime.now().strftime('%Y%m%d%H%M%S')  # 添加全局变量 TIME
@@ -25,8 +25,17 @@ def get_url_with_scheme(url):
 
 def main():
     global TARGET_URL
+
+    # 创建argparse对象
+    parser = argparse.ArgumentParser(description="An Automated Penetration Testing Tool")
+    parser.add_argument("-u", "--url", required=True, help="TARGET_URL")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-a","--all",action="store_true",help="full scan")
+    group.add_argument("-c","--cms",action="store_true",help="cms identification only")
+    args = parser.parse_args()
+
     try:
-        input_url = input("请输入目标网站url：")
+        input_url = args.url
         TARGET_URL = get_url_with_scheme(input_url)
     except MissingSchema:
         print("无效的URL，请确保输入正确的网址，例如www.example.com")
@@ -37,24 +46,23 @@ def main():
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    # 创建线程
-    t1 = threading.Thread(target=CMS_main.get_CMS, args=(TARGET_URL,TIMESTAMP))
-    t2 = threading.Thread(target=Directory_main.get_directory, args=(TARGET_URL,TIMESTAMP))
-    t3 = threading.Thread(target=subDomains_main.get_subdomains, args=(TARGET_URL,TIMESTAMP))
-    t4 = threading.Thread(target=port_main.get_port, args=(TARGET_URL,TIMESTAMP))
+    if args.cms:
+        CMS_main.get_CMS(TARGET_URL, TIMESTAMP)
+        print("-cms success")
+    else:
+        # Running CMS_main
+        CMS_main.get_CMS(TARGET_URL,TIMESTAMP)
 
-    # 开始线程
-    t1.start()
-    t1.join()  # 等待 t1 线程完成
+        # Running Directory_main
+        Directory_main.get_directory(TARGET_URL,TIMESTAMP)
 
-    t2.start()
-    t2.join()  # 等待 t2 线程完成
+        # Running subDomains_main
+        subDomains_main.get_subdomains(TARGET_URL,TIMESTAMP)
 
-    t3.start()
-    t3.join()  # 等待 t3 线程完成
+        # Running port_main
+        port_main.get_port(TARGET_URL,TIMESTAMP)
 
-    t4.start()
-    t4.join()  # 等待 t4 线程完成
+        print("defult sucess")
 
 if __name__ == "__main__":
     main()

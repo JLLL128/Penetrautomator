@@ -1,4 +1,6 @@
 import os
+import json
+import shutil
 import requests
 import json
 import datetime
@@ -8,6 +10,7 @@ from requests.exceptions import MissingSchema
 
 class CMS_Identification:
     def __init__(self, target_url,timestamp):
+        self.timestamp=timestamp
         self.target_url = target_url
         self.api_key = 'w9vllsvks6tk4ynmhwicwaxth2c9kmuokb9rnrih4qdgvuo8nak1a26ggee7jou4j2n2es'  # Replace this with your actual API key
         self.script_path = os.path.dirname(os.path.realpath(__file__))
@@ -18,6 +21,24 @@ class CMS_Identification:
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
         self.output_file=os.path.join(self.output_dir, file_name)
+        self.logfile = f"{self.main_path}\\result\\{timestamp}\\log.json"
+        os.makedirs(os.path.dirname(self.logfile), exist_ok=True)
+
+    def progress_record(self, module=None, finished=False):
+        if os.path.exists(self.logfile) is False:
+            shutil.copy(f"{self.main_path}\\config\\log_template.json", f"{self.main_path}\\result\\{self.timestamp}\\log.json")
+        with open(self.logfile, "r", encoding="utf-8") as f1:
+            log_json = json.loads(f1.read())
+        if finished is False:
+            if log_json[module] is False:
+                return False
+            elif log_json[module] is True:
+                return True
+        elif finished is True:
+            log_json[module] = True
+            with open(self.logfile, "w", encoding="utf-8") as f:
+                f.write(json.dumps(log_json))
+            return True
 
     def query_cms(self):
         api_url = 'https://whatcms.org/API/Tech'
@@ -37,6 +58,7 @@ class CMS_Identification:
         with open(self.output_file, 'w') as f:
             json.dump(final_result, f,indent=4)
         print("CMS Query has completed its work")
+        self.progress_record(module='cms_identification', finished=True)
 
 def get_CMS(target_url,timestamp):
     tool = CMS_Identification(target_url,timestamp)
