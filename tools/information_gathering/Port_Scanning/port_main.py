@@ -8,6 +8,7 @@ from pathlib import Path
 
 class Port_Scanning:
     def __init__(self, target_url,timestamp):
+        # Initialize the Port_Scanning object with target_url and timestamp
         self.timestamp = timestamp
         self.target_url = target_url
         self.script_path = os.path.dirname(os.path.realpath(__file__))
@@ -23,6 +24,7 @@ class Port_Scanning:
         os.makedirs(os.path.dirname(self.logfile), exist_ok=True)
 
     def progress_record(self, module=None, finished=False):
+        # Record the progress of a module
         if os.path.exists(self.logfile) is False:
             shutil.copy(f"{self.main_path}\\config\\log_template.json", f"{self.main_path}\\result\\{self.timestamp}\\log.json")
         with open(self.logfile, "r", encoding="utf-8") as f1:
@@ -39,6 +41,7 @@ class Port_Scanning:
             return True
 
     def run_port_scan(self):
+        # Run the port scan and record its progress
         cmd = f'{self.tool_path} {self.parsed_url.netloc} -sT -Pn --unprivileged'
         print("Nmap Port Scanning is running, please wait...")
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True,bufsize=0)
@@ -53,10 +56,12 @@ class Port_Scanning:
                 self.progress_record(module='port_scan', finished=True)
 
 def get_port(target_url,timestamp):
+    # Create a Port_Scanning object and run port scan
     tool = Port_Scanning(target_url,timestamp)
     tool.run_port_scan()
 
 if __name__ == '__main__':
-    TARGET_URL = input("请输入目标网站url：")
-    TIMESTAMP = datetime.datetime.now().strftime('%Y%m%d%H%M%S')  # 添加全局变量 TIME
+    # Main function: get the target URL from user input and run get_port
+    TARGET_URL = input("Please enter the target website url：")
+    TIMESTAMP = datetime.datetime.now().strftime('%Y%m%d%H%M%S')  # Add global variable TIME
     get_port(TARGET_URL,TIMESTAMP)

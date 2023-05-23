@@ -9,6 +9,7 @@ from datetime import datetime
 
 class SubDomain_Enumeration:
     def __init__(self, target_url, timestamp):
+        # Initialize the SubDomain_Enumeration object with target_url and timestamp
         self.timestamp = timestamp
         self.target_url = target_url
         self.script_path = os.path.dirname(os.path.realpath(__file__))
@@ -24,6 +25,7 @@ class SubDomain_Enumeration:
         os.makedirs(os.path.dirname(self.logfile), exist_ok=True)
 
     def progress_record(self, module=None, finished=False):
+        # Record the progress of a module
         if os.path.exists(self.logfile) is False:
             shutil.copy(f"{self.main_path}\\config\\log_template.json", f"{self.main_path}\\result\\{self.timestamp}\\log.json")
         with open(self.logfile, "r", encoding="utf-8") as f1:
@@ -40,6 +42,7 @@ class SubDomain_Enumeration:
             return True
 
     def run_subdomainsbrute(self):
+        # Run the subdomains brute force tool and record its progress
         cmd = f'python {self.tool_path} {self.parsed_url.netloc} -p 10 -o {self.output_file}'
         print("SubDomainsBrute is running, please wait...")
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -52,14 +55,16 @@ class SubDomain_Enumeration:
             self.progress_record(module='subdomainbrute', finished=True)
 
 def get_subdomains(target_url, timestamp):
+    # Create a SubDomain_Enumeration object and run subdomains brute force
     tool = SubDomain_Enumeration(target_url, timestamp)
     tool.run_subdomainsbrute()
 
 if __name__ == '__main__':
+    # Main function: get the target URL from user input and run get_subdomains
     try:
-        TARGET_URL = input("请输入目标网站url：")
+        TARGET_URL = input("Please enter the target website url：")
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     except MissingSchema:
-        print("无效的URL，请确保输入正确的网址，例如www.example.com")
+        print("Invalid URL, please make sure to enter the correct address, such as www.example.com")
         exit(1)
     get_subdomains(TARGET_URL, timestamp)

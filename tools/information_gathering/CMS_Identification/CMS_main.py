@@ -10,6 +10,7 @@ from requests.exceptions import MissingSchema
 
 class CMS_Identification:
     def __init__(self, target_url,timestamp):
+        # Initialize the CMS_Identification object with target_url and timestamp
         self.timestamp=timestamp
         self.target_url = target_url
         self.api_key = 'w9vllsvks6tk4ynmhwicwaxth2c9kmuokb9rnrih4qdgvuo8nak1a26ggee7jou4j2n2es'  # Replace this with your actual API key
@@ -25,6 +26,7 @@ class CMS_Identification:
         os.makedirs(os.path.dirname(self.logfile), exist_ok=True)
 
     def progress_record(self, module=None, finished=False):
+        # Record the progress of a module
         if os.path.exists(self.logfile) is False:
             shutil.copy(f"{self.main_path}\\config\\log_template.json", f"{self.main_path}\\result\\{self.timestamp}\\log.json")
         with open(self.logfile, "r", encoding="utf-8") as f1:
@@ -41,6 +43,7 @@ class CMS_Identification:
             return True
 
     def query_cms(self):
+        # Query the CMS of the target_url
         api_url = 'https://whatcms.org/API/Tech'
         params = {
             'key': self.api_key,
@@ -50,6 +53,7 @@ class CMS_Identification:
         return response.json()
 
     def run_cms_identification(self):
+        # Run the CMS identification and record its progress
         print("CMS Query is running, please wait...")
         result = self.query_cms()
         final_result = {"url": self.target_url, "code": result["result"]["code"], "msg": result["result"]["msg"]}
@@ -61,14 +65,16 @@ class CMS_Identification:
         self.progress_record(module='cms_identification', finished=True)
 
 def get_CMS(target_url,timestamp):
+    # Create a CMS_Identification object and run CMS identification
     tool = CMS_Identification(target_url,timestamp)
     tool.run_cms_identification()
 
 if __name__ == "__main__":
+    # Main function: get the target URL from user input and run get_CMS
     try:
-        TARGET_URL = input("请输入目标网站url：")
+        TARGET_URL = input("Please enter the target website url：")
     except MissingSchema:
-        print("无效的URL，请确保输入正确的网址，例如www.example.com")
+        print("Invalid URL, please make sure to enter the correct address, such as www.example.com")
         exit(1)
     TIMESTAMP = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
     get_CMS(TARGET_URL,TIMESTAMP)
