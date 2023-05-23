@@ -1,0 +1,6 @@
+{
+    "dirsearch": false,
+    "cms_identification": false,
+    "port_scan": false,
+    "subdomainbrute": false
+}
