@@ -3,6 +3,7 @@ from tools.information_gathering.Directory_Enumeration import Directory_main
 from tools.information_gathering.CMS_Identification import CMS_main
 from tools.information_gathering.Subdomain_Enumeration import subDomains_main
 from tools.information_gathering.Port_Scanning import port_main
+from tools.information_gathering.Company_Identification import Company_main
 import requests
 from requests.exceptions import MissingSchema
 from urllib.parse import urlparse
@@ -62,6 +63,8 @@ def main():
         # Running port_main
         port_main.get_port(TARGET_URL,TIMESTAMP)
 
+        # Running Company_main
+        Company_main.get_company(TARGET_URL,TIMESTAMP)
         print("defult sucess")
 
 if __name__ == "__main__":

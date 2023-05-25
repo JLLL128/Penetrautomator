@@ -7,9 +7,10 @@ An automated penetration testing tool
 - 路径爆破（调用dirsearch）
 - 端口扫描（调用nmap的命令）
 - 子域名爆破（调用subDomainBrute）
+- **域名反查公司名（调用whois的api）**
 - 日志生成
 
-![image-20230522214950754](C:\Users\admin\Desktop\Pene\image-20230522214950754.png)
+![image-20230522214950754](https://jiangxiaoyyds.com/img/Penetrautomator/image-20230522214950754.png)
 
 ## 用法
 
