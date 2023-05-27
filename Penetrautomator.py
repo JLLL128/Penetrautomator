@@ -87,9 +87,6 @@ def main():
         #Running poc_main
         poc_main.poc_scan(TARGET_URL,TIMESTAMP)
 
-        # Running Xray
-        poc_main.poc_scan(TARGET_URL, TIMESTAMP)
-
         print("defult sucess")
 
 if __name__ == "__main__":

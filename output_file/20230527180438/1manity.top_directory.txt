@@ -1,0 +1,15 @@
+301 http://1manity.top:80/.well-known/acme-challenge
+200 http://1manity.top:80/LICENSE.txt
+301 http://1manity.top:80/admin
+302 http://1manity.top:80/admin/
+302 http://1manity.top:80/admin/?/login
+302 http://1manity.top:80/admin/index.php
+200 http://1manity.top:80/admin/login.php
+200 http://1manity.top:80/cgi-bin/test-cgi
+200 http://1manity.top:80/config.inc.php
+301 http://1manity.top:80/images
+200 http://1manity.top:80/index.php
+301 http://1manity.top:80/install
+200 http://1manity.top:80/test.php
+301 http://1manity.top:80/var
+301 http://1manity.top:80/usr
