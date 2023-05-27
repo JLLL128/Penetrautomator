@@ -3,6 +3,7 @@ from tools.information_gathering.Directory_Enumeration import Directory_main
 from tools.information_gathering.CMS_Identification import CMS_main
 from tools.information_gathering.Subdomain_Enumeration import subDomains_main
 from tools.information_gathering.Port_Scanning import port_main
+from tools.vulnerability_scanning import poc_main
 from tools.information_gathering.Company_Identification import Company_main
 from tools.vulnerability_scanning import poc_main
 import requests
@@ -67,6 +68,7 @@ def main():
         CMS_main.get_CMS(TARGET_URL, TIMESTAMP)
         print("-cms success")
     else:
+
         # Running CMS_main
         CMS_main.get_CMS(TARGET_URL,TIMESTAMP)
 
@@ -84,6 +86,10 @@ def main():
 
         #Running poc_main
         poc_main.poc_scan(TARGET_URL,TIMESTAMP)
+
+        # Running Xray
+        poc_main.poc_scan(TARGET_URL, TIMESTAMP)
+
         print("defult sucess")
 
 if __name__ == "__main__":

@@ -1,0 +1,9 @@
+Starting Nmap 7.93 ( https://nmap.org ) at 2023-05-27 17:55 й׼ʱ
+Nmap scan report for 1manity.top (101.43.122.221)
+Host is up (0.00056s latency).
+Not shown: 998 filtered tcp ports (no-response)
+PORT    STATE SERVICE
+25/tcp  open  smtp
+110/tcp open  pop3
+
+Nmap done: 1 IP address (1 host up) scanned in 58.20 seconds
