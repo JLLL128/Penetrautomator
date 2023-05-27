@@ -4,6 +4,7 @@ from tools.information_gathering.CMS_Identification import CMS_main
 from tools.information_gathering.Subdomain_Enumeration import subDomains_main
 from tools.information_gathering.Port_Scanning import port_main
 from tools.information_gathering.Company_Identification import Company_main
+from tools.vulnerability_scanning import poc_main
 import requests
 from requests.exceptions import MissingSchema
 from urllib.parse import urlparse
@@ -80,6 +81,9 @@ def main():
 
         # Running Company_main
         Company_main.get_company(TARGET_URL, TIMESTAMP)
+
+        #Running poc_main
+        poc_main.poc_scan(TARGET_URL,TIMESTAMP)
         print("defult sucess")
 
 if __name__ == "__main__":
