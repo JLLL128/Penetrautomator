@@ -1,0 +1,35 @@
+{
+    "url": "http://1manity.top",
+    "code": 200,
+    "msg": "Success",
+    "results": [
+        {
+            "name": "Typecho",
+            "id": "226",
+            "version": "1.2.0",
+            "categories": [
+                "Blog",
+                "CMS"
+            ],
+            "url": "//whatcms.org/c/Typecho"
+        },
+        {
+            "name": "PHP",
+            "id": 1656,
+            "version": "",
+            "categories": [
+                "Programming Language"
+            ],
+            "url": "//whatcms.org/c/PHP"
+        },
+        {
+            "name": "Apache",
+            "id": 1072,
+            "version": "",
+            "categories": [
+                "Web Server"
+            ],
+            "url": "//whatcms.org/c/Apache"
+        }
+    ]
+}
