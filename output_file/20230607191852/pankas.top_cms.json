@@ -1,0 +1,35 @@
+{
+    "url": "https://pankas.top",
+    "code": 200,
+    "msg": "Success",
+    "results": [
+        {
+            "name": "Hexo",
+            "id": 222,
+            "version": "6.0.0",
+            "categories": [
+                "Static Site Generator",
+                "CMS"
+            ],
+            "url": "//whatcms.org/c/Hexo"
+        },
+        {
+            "name": "Node.js",
+            "id": 1612,
+            "version": "",
+            "categories": [
+                "Programming Language"
+            ],
+            "url": "//whatcms.org/c/Node-js"
+        },
+        {
+            "name": "Netlify",
+            "id": 570,
+            "version": "",
+            "categories": [
+                "CDN"
+            ],
+            "url": "//whatcms.org/c/Netlify"
+        }
+    ]
+}
