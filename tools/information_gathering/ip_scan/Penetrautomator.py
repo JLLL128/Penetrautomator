@@ -3,9 +3,6 @@ from tools.information_gathering.Directory_Enumeration import Directory_main
 from tools.information_gathering.CMS_Identification import CMS_main
 from tools.information_gathering.Subdomain_Enumeration import subDomains_main
 from tools.information_gathering.Port_Scanning import port_main
-from tools.vulnerability_scanning import poc_main
-from tools.information_gathering.Company_Identification import Company_main
-from tools.vulnerability_scanning import poc_main
 from tools.information_gathering.ip_scan import ip_scan
 import requests
 from requests.exceptions import MissingSchema
@@ -44,34 +41,18 @@ def get_url_with_scheme(url):
 
 def main():
     global TARGET_URL
-
+    global TARGET_IP
     # 创建argparse对象
     parser = argparse.ArgumentParser(description="An Automated Penetration Testing Tool")
-    parser.add_argument("-u", "--url", dest="url", required=False, help="TARGET_URL")
-    parser.add_argument("-f", "--file", dest="file", required=False, help="File path")
+    parser.add_argument("-u", "--url", dest="url", required=True, help="TARGET_URL")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-a","--all",action="store_true",help="full scan")
     group.add_argument("-c","--cms",action="store_true",help="cms identification only")
+    group.add_argument("-i","--ip",dest="ip",help="TARGET_IP you want to you want to scan,for example: 192.168.11.11 | 192.168.11.11/24")
     args = parser.parse_args()
 
-    # 当包含 --file 参数时
-    if args.file:
-        # 打开文件，读取每一行的内容
-        with open(args.file, 'r') as f:
-            file_contents = [line.strip() for line in f]
-            for item in file_contents:
-                try:
-                    startAttack(item,args.cms)
-                except:
-                    continue
-        # 处理或使用 file_contents ...
-
-    startAttack(args.url,args.cms)
-
-def startAttack(target,argsCms):
-    global TARGET_URL
     try:
-        input_url = target
+        input_url = args.url
         TARGET_URL = get_url_with_scheme(input_url)
     except MissingSchema:
         print("无效的URL，请确保输入正确的网址，例如www.example.com")
@@ -82,12 +63,10 @@ def startAttack(target,argsCms):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     print(banner)
-
-    if argsCms:
+    if args.cms:
         CMS_main.get_CMS(TARGET_URL, TIMESTAMP)
         print("-cms success")
     else:
-
         # Running CMS_main
         CMS_main.get_CMS(TARGET_URL,TIMESTAMP)
 
@@ -100,13 +79,13 @@ def startAttack(target,argsCms):
         # Running port_main
         port_main.get_port(TARGET_URL,TIMESTAMP)
 
-        # Running Company_main
-        Company_main.get_company(TARGET_URL, TIMESTAMP)
-
-        #Running poc_main
-        poc_main.poc_scan(TARGET_URL,TIMESTAMP)
-
         print("defult sucess")
+
+    # Running Ip_Scan
+    if args.ip:
+        TARGET_IP = args.ip
+        ip_scan.get_ip_scan(TARGET_IP,TIMESTAMP)
+        print("-ip success")
 
 if __name__ == "__main__":
     main()
