@@ -7,6 +7,7 @@ An automated penetration testing tool
 - 路径爆破（调用dirsearch）
 - 端口扫描（调用nmap的命令）
 - 子域名爆破（调用subDomainBrute）
+- ip扫描（模仿fscan的扫描方法）
 - **域名反查公司名（调用whois的api）**
 - 日志生成
 
